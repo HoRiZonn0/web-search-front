@@ -1,0 +1,114 @@
+openapi: 3.1.0
+info:
+  title: CN Web Search Portal Control Plane
+  version: 0.1.0
+  description: >
+    Reserved contract for customer onboarding, API Key lifecycle and usage
+    management. These endpoints are not implemented by the current static
+    portal.
+paths:
+  /api/access-requests:
+    post:
+      summary: Submit a private-preview access request
+      operationId: createAccessRequest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccessRequest"
+      responses:
+        "202":
+          description: Request accepted for review
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccessRequestResult"
+  /api/account/usage:
+    get:
+      summary: Get usage for the authenticated customer
+      operationId: getAccountUsage
+      security:
+        - portalSession: []
+      responses:
+        "200":
+          description: Current monthly usage and limits
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsageSummary"
+  /api/keys:
+    post:
+      summary: Create a new customer API Key
+      description: >
+        The full secret must be returned only once. Key generation and storage
+        must happen in the trusted control plane, never in browser JavaScript.
+      operationId: createApiKey
+      security:
+        - portalSession: []
+      responses:
+        "201":
+          description: Key created
+        "501":
+          description: Key provisioning is not enabled
+components:
+  securitySchemes:
+    portalSession:
+      type: apiKey
+      in: cookie
+      name: portal_session
+  schemas:
+    AccessRequest:
+      type: object
+      required: [name, email, useCase, expectedVolume]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        organization:
+          type: string
+        useCase:
+          type: string
+        expectedVolume:
+          type: string
+          enum: [under-100, 100-1000, 1000-10000, over-10000]
+    AccessRequestResult:
+      type: object
+      required: [request_id, status, message]
+      properties:
+        request_id:
+          type: string
+        status:
+          type: string
+          const: waitlist
+        message:
+          type: string
+    UsageSummary:
+      type: object
+      required:
+        - customerId
+        - plan
+        - creditsUsed
+        - creditsLimit
+        - jobsCreated
+      properties:
+        customerId:
+          type: string
+        plan:
+          type: string
+        creditsUsed:
+          type: integer
+        creditsLimit:
+          type: integer
+        jobsCreated:
+          type: integer
+        successRate:
+          type: number
+        averageLatencySeconds:
+          type: number
+        rateLimitPerMinute:
+          type: integer
+        maxActiveJobs:
+          type: integer

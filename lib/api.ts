@@ -20,6 +20,16 @@ export const demoUsage: UsageSummary = {
 export async function requestApiAccess(
   payload: AccessRequest,
 ): Promise<AccessRequestResponse> {
+  if (process.env.NEXT_PUBLIC_PORTAL_MODE !== "connected") {
+    await new Promise((resolve) => window.setTimeout(resolve, 450));
+    return {
+      requestId: `req_preview_${Date.now().toString(36)}`,
+      status: "waitlist",
+      message:
+        "申请已在预览模式中接收。正式开放后，我们会在这里完成审核与 Key 发放。",
+    };
+  }
+
   const response = await fetch("/api/access-requests", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -39,6 +49,10 @@ export async function requestApiAccess(
 }
 
 export async function getUsage(): Promise<UsageSummary> {
+  if (process.env.NEXT_PUBLIC_PORTAL_MODE !== "connected") {
+    return demoUsage;
+  }
+
   const response = await fetch("/api/account/usage", {
     cache: "no-store",
   });
