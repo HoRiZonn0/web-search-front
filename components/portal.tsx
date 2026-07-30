@@ -614,18 +614,18 @@ function HeroMesh() {
           <feGaussianBlur stdDeviation="90" />
         </filter>
         <linearGradient id="mesh-base" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#fff4de" />
-          <stop offset="50%" stopColor="#f7f3ff" />
-          <stop offset="100%" stopColor="#eef8ff" />
+          <stop offset="0%" stopColor="#f5faf7" />
+          <stop offset="50%" stopColor="#f9fbfa" />
+          <stop offset="100%" stopColor="#f2f8f5" />
         </linearGradient>
       </defs>
       <rect width="1440" height="720" fill="url(#mesh-base)" />
-      <g filter="url(#hero-blur)" opacity="0.74">
-        <ellipse cx="120" cy="130" rx="280" ry="210" fill="#ffb37c" />
-        <ellipse cx="580" cy="40" rx="290" ry="180" fill="#f7a6d2" />
-        <ellipse cx="890" cy="160" rx="340" ry="260" fill="#8f86ff" />
-        <ellipse cx="1310" cy="70" rx="260" ry="230" fill="#75d5ff" />
-        <ellipse cx="1110" cy="500" rx="360" ry="200" fill="#ffd891" />
+      <g filter="url(#hero-blur)" opacity="0.56">
+        <ellipse cx="120" cy="130" rx="280" ry="210" fill="#c9f4df" />
+        <ellipse cx="580" cy="40" rx="290" ry="180" fill="#e6f7ef" />
+        <ellipse cx="890" cy="160" rx="340" ry="260" fill="#9ee9c8" />
+        <ellipse cx="1310" cy="70" rx="260" ry="230" fill="#d8f5e8" />
+        <ellipse cx="1110" cy="500" rx="360" ry="200" fill="#edf7f2" />
       </g>
     </svg>
   );
@@ -990,9 +990,9 @@ function UsageTab({
           </div>
         </div>
         <div className="profile-breakdown">
-          <ProfileRow label="Fast" jobs={28} credits={28} color="#45b8d8" />
-          <ProfileRow label="Balanced" jobs={16} credits={32} color="#635bff" />
-          <ProfileRow label="Thorough" jobs={140} credits={560} color="#f286b7" />
+          <ProfileRow label="Fast" jobs={28} credits={28} color="#a7b0ab" />
+          <ProfileRow label="Balanced" jobs={16} credits={32} color="#3ecf8e" />
+          <ProfileRow label="Thorough" jobs={140} credits={560} color="#1f8f68" />
         </div>
       </div>
       <div className="usage-chart-card full">
